@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile.user.username }}'s profile.{% endblock %}
+
+{% block content_title %}<h2>Profile of {{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
+
+{% block content %}
+<div class="white-box">
+
+  <div id="details">
+    {% if profile.user.get_full_name %}
+    <p><strong>Name</strong><br /> {{ profile.user.get_full_name }}</p>
+    {% endif %}
+    {% if profile.user.email %}
+    <p><strong>Email</strong><br />{{ profile.user.email }}</p>
+    {% endif %}
+    {% if profile.website %}
+    <p><strong>Website</strong><br /> <a href="{{ profile.website }}">{{ profile.website }}</a></p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

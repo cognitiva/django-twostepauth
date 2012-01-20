@@ -1,0 +1,8 @@
+include AUTHORS
+include LICENSE
+include README.rst
+include HISTORY
+recursive-include docs *
+recursive-include twostepauth/templates *
+recursive-include twostepauth/fixtures *
+recursive-include twostepauth/tests/templates *

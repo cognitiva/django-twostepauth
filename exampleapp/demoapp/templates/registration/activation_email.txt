@@ -1,0 +1,7 @@
+Dear user:
+
+This e-mail address has been submitted for registration with {{site.name}}. 
+To complete your registration, click the following link: http://{{site.domain}}{% url registration_activate activation_key %}
+
+Sincerely,
+{{site.name}} Administration Team

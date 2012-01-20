@@ -1,0 +1,22 @@
+body { width: 800px; margin: 30px auto 50px; font-family: 'Georgia', serif; font-size: 17px; color: #000; }
+a            { color: #004B6B; }
+a:hover      { color: #6D4100; }
+h1, h2, h3, h4   { font-family: 'Garamond', 'Georgia', serif; font-weight: normal; }
+h1           { font-size: 30px; margin: 15px 0 5px 0; }
+h2           { font-size: 30px; margin: 15px 0 5px 0; }
+#header { float: right; }
+#header-nav ul {  }
+#header-nav li { float: left; list-style: none; margin-left: 7px; }
+#header-nav a { font-style: italic; margin-right:7px; }
+#body { clear: both; padding-top: 20px; }
+
+label { display: block; float: left; clear: left; width: 10em; padding-right: 1em; text-align: left; 
+       line-height: 1.8em }
+input { display: block; float: left; line-height: 1.8em }
+select { display: block; float: left; line-height: 1.8em }
+br { clear: both; }
+fieldset { border: 0px; margin: 0; padding: 0; }
+legend { font-family: 'Garamond', 'Georgia', serif; font-weight: normal; font-size: 30px; margin: 15px 0 5px 0; } 
+li { list-style: none; }
+ul.errorlist { color:red; }
+.submit { padding-top: 10px; }

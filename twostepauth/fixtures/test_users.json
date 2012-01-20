@@ -1,0 +1,88 @@
+[
+    {
+        "fields": {
+            "date_joined": "2012-01-10 05:56:16", 
+            "email": "test_otp@example.com", 
+            "first_name": "", 
+            "groups": [], 
+            "is_active": true, 
+            "is_staff": false, 
+            "is_superuser": false, 
+            "last_login": "2012-01-10 05:56:16", 
+            "last_name": "", 
+            "password": "sha1$4e1f2$f6d38a7284c086eeefe9780a3880f382a0152640", 
+            "user_permissions": [], 
+            "username": "test_otp"
+        }, 
+        "model": "auth.user", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "date_joined": "2012-01-10 05:56:46", 
+            "email": "test_no_otp@example.com", 
+            "first_name": "", 
+            "groups": [], 
+            "is_active": true, 
+            "is_staff": false, 
+            "is_superuser": false, 
+            "last_login": "2012-01-10 05:57:04", 
+            "last_name": "", 
+            "password": "sha1$bf983$6d8e8661497bee53079f865eebdf71ee353973ca", 
+            "user_permissions": [], 
+            "username": "test_no_otp"
+        }, 
+        "model": "auth.user", 
+        "pk": 3
+    },
+    {
+        "fields": {
+            "date_joined": "2012-01-10 05:56:16", 
+            "email": "test_no_profile@example.com", 
+            "first_name": "", 
+            "groups": [], 
+            "is_active": true, 
+            "is_staff": false, 
+            "is_superuser": false, 
+            "last_login": "2012-01-10 05:56:16", 
+            "last_name": "", 
+            "password": "sha1$fe833$7c7e58550999f39d0a18d14113ee09114cde1fb4",
+            "user_permissions": [],
+            "username": "test_no_profile"
+        }, 
+        "model": "auth.user", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "tsa_active": false, 
+            "tsa_backup_codes": "", 
+            "tsa_hotp_counter": 1, 
+            "tsa_secret": "", 
+            "tsa_skew": 0, 
+            "user": 3
+        }, 
+        "model": "twostepauth.testprofile", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "tsa_active": true, 
+            "tsa_backup_codes": "89683765;88611506;92275470;66332141;40243962;31262430;67871482;74624078;37259719;87607025", 
+            "tsa_hotp_counter": 1, 
+            "tsa_secret": "XYTZDQ672RIYILW4", 
+            "tsa_skew": 0,
+            "user": 2
+        }, 
+        "model": "twostepauth.testprofile", 
+        "pk": 3
+    },
+    {
+        "fields": {
+            "timestamp": 99, 
+            "user": 2
+        }, 
+        "model": "twostepauth.blockedtimestamp", 
+        "pk": 1
+    }
+]

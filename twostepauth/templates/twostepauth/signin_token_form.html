@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Signin Authentication Code" %}{% endblock %}
+
+{% block content %}
+<form action="{% url login_step_two %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Authentication Code" %}</legend>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {% if field.is_hidden %}
+    	{{ field }}
+	{% else %}
+		
+    	<p>
+    		{{ field.label_tag }}
+    		{{ field }} 
+			{% if field.errors %}<br>{{ field.errors }}{% endif %}
+    	</p>
+    {% endif %}
+    {% endfor %}
+  </fieldset>
+  <div class="submit">
+  <input type="submit" value="{% trans "Signin" %}" />
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+  </div>
+</form>
+{% endblock %}

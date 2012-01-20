@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block content_title %}<h2>Edit  profile</h2>{% endblock %}
+
+{% block content %}
+
+<form action="" method="post" id="twostepauth_change_form">
+
+  <fieldset>
+    {{ form.as_p }}
+  </fieldset>
+
+  <div class="submit">
+  <input type="submit" value="Change" />
+  </div>
+</form>
+
+{% endblock %}
