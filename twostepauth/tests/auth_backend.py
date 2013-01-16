@@ -1,4 +1,5 @@
 #coding: utf-8
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from .. import models
@@ -17,12 +18,19 @@ class TwoStepAuthBackendTestCase(TwoStepAuthProfileTestCaseBase):
 
     def setUp(self):
         super(TwoStepAuthBackendTestCase, self).setUp()
+        if hasattr(settings, 'PASSWORD_HASHERS'):
+            self.original_password_hashers_setting = settings.PASSWORD_HASHERS
+            settings.PASSWORD_HASHERS = (
+                    'django.contrib.auth.hashers.SHA1PasswordHasher',
+                )
         self.old_now = models.now
         models.now = get_fake_time_fn()
         self.backend = TwoStepAuthBackend()
 
     def tearDown(self):
         models.now = self.old_now
+        if hasattr(self, 'original_password_hashers_setting'):
+            settings.PASSWORD_HASHERS = self.original_password_hashers_setting
         super(TwoStepAuthBackendTestCase, self).tearDown()
 
     def test_user_no_profile(self):

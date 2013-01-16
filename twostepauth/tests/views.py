@@ -29,11 +29,17 @@ class TwoStepAuthenticationViewsTestCase(TwoStepAuthProfileTestCaseBase):
         )
         self.old_TEMPLATE_LOADERS = settings.TEMPLATE_LOADERS
         settings.TEMPLATE_LOADERS = ('django.template.loaders.filesystem.Loader',)
- 
+        if hasattr(settings, 'PASSWORD_HASHERS'):
+            self.original_password_hashers_setting = settings.PASSWORD_HASHERS
+            settings.PASSWORD_HASHERS = (
+                    'django.contrib.auth.hashers.SHA1PasswordHasher',
+                )
 
     def tearDown(self):
         settings.TEMPLATE_LOADERS = self.old_TEMPLATE_LOADERS
         settings.TEMPLATE_DIRS = self.old_TEMPLATE_DIRS
+        if hasattr(self, 'original_password_hashers_setting'):
+            settings.PASSWORD_HASHERS = self.original_password_hashers_setting
         models.now = self.old_now
         super(TwoStepAuthenticationViewsTestCase, self).tearDown()
 
@@ -97,7 +103,7 @@ class TestLoginStepOne(TwoStepAuthenticationViewsTestCase):
         self.login('test_no_otp', 'test_no_otp')
 
     def test_two_step_on(self):
-        """ Test that a user wit tsa active is show the token form. """
+        """ Test that a user with tsa active is shown the token form. """
         response = self.client.post(reverse('auth_login'), {
             'username': 'test_otp',
             'password': 'test_otp'

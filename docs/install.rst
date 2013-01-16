@@ -62,18 +62,18 @@ and in ``settings.py`` indicate that this model is the user profile model:
 
 In the urls configuration set the two-step login views 
 
-    url(r'^accounts/login/$', 
-        'twostepauth.views.login_step_one', 
+    url(r'^accounts/login/$',
+        'twostepauth.views.login_step_one',
         name='auth_login'),
-    url(r'^accounts/login/step_two$', 
-        'twostepauth.views.login_step_two', 
+    url(r'^accounts/login/step_two$',
+        'twostepauth.views.login_step_two',
         name='login_step_two')
 
 The ``twostepauth`` also includes a view for the user profile management of
 the two-step authentication. Example setup for this view:
 
-    url(r'^profiles/twostepauth/$', 
-        'twostepauth.views.twostepauth_profile', 
+    url(r'^profiles/twostepauth/$',
+        'twostepauth.views.twostepauth_profile',
         name='twostepauth_profile'),
 
 You will need to create a template named ``twostepauth/profile.html``. You can

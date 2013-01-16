@@ -91,10 +91,17 @@ class TwoStepAuthProfileTestCase(TwoStepAuthProfileTestCaseBase):
         self.profile = self.user_otp.get_profile()
         self.original_reuse_setting = ts_settings.TWOSTEPAUTH_DISALLOW_REUSE
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = True
+        if hasattr(settings, 'PASSWORD_HASHERS'):
+            self.original_password_hashers_setting = settings.PASSWORD_HASHERS
+            settings.PASSWORD_HASHERS = (
+                    'django.contrib.auth.hashers.SHA1PasswordHasher',
+                )
 
     def tearDown(self):
         super(TwoStepAuthProfileTestCase, self).tearDown()
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = self.original_reuse_setting
+        if hasattr(self, 'original_password_hashers_setting'):
+            settings.PASSWORD_HASHERS = self.original_password_hashers_setting
         models.now = self.old_now
 
     def test_validate_totp(self):
@@ -260,10 +267,17 @@ class TwoStepAuthProfileAllowReuseTestCase(TwoStepAuthProfileTestCaseBase):
         self.user_otp = User.objects.get(username='test_otp')
         self.original_reuse_setting = ts_settings.TWOSTEPAUTH_DISALLOW_REUSE
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = False
+        if hasattr(settings, 'PASSWORD_HASHERS'):
+            self.original_password_hashers_setting = settings.PASSWORD_HASHERS
+            settings.PASSWORD_HASHERS = (
+                    'django.contrib.auth.hashers.SHA1PasswordHasher',
+                )
 
     def tearDown(self):
         super(TwoStepAuthProfileAllowReuseTestCase, self).tearDown()
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = self.original_reuse_setting
+        if hasattr(self, 'original_password_hashers_setting'):
+            settings.PASSWORD_HASHERS = self.original_password_hashers_setting
 
     def test_invalidate_totp_code(self):
         """ test that if DISALLOW_REUSE is disabled, a code in the blocked list is accepted """
@@ -280,11 +294,18 @@ class TwoStepAuthProfileHotpTestCase(TwoStepAuthProfileTestCaseBase):
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = True
         self.original_totp_setting = ts_settings.TWOSTEPAUTH_TOTP
         ts_settings.TWOSTEPAUTH_TOTP = False
+        if hasattr(settings, 'PASSWORD_HASHERS'):
+            self.original_password_hashers_setting = settings.PASSWORD_HASHERS
+            settings.PASSWORD_HASHERS = (
+                    'django.contrib.auth.hashers.SHA1PasswordHasher',
+                )
 
     def tearDown(self):
         super(TwoStepAuthProfileHotpTestCase, self).tearDown()
         ts_settings.TWOSTEPAUTH_DISALLOW_REUSE = self.original_reuse_setting
         ts_settings.TWOSTEPAUTH_TOTP = self.original_totp_setting
+        if hasattr(self, 'original_password_hashers_setting'):
+            settings.PASSWORD_HASHERS = self.original_password_hashers_setting
 
     def test_validate_hotp(self):
         """ Profile : Validate HOTP """
