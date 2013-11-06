@@ -45,7 +45,7 @@ class TwoStepAuthBaseProfile(models.Model):
             return False
         if code < 0 or code >= 1000000:
             # All time based verification codes are no longer than six digits.
-            raise False
+            return False
         # Compute verification codes and compare them with user input
         tm = int(now() / twostepauth_settings.TWOSTEPAUTH_TIME_STEP_SIZE)
 
