@@ -219,13 +219,13 @@ class TwoStepAuthBaseProfile(models.Model):
         self.user.totp_skew_set.filter(timestamp__lt=resetting_list[-1].timestamp).delete()
         return False
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if self.tsa_active:
             if not self.tsa_secret:
                 self.tsa_secret = generate_secret()
             if not self.tsa_backup_codes:
                 self.set_backup_codes(generate_backup_codes())
-        super(TwoStepAuthBaseProfile, self).save()
+        super(TwoStepAuthBaseProfile, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return unicode(self.user)
