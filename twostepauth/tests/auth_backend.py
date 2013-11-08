@@ -2,7 +2,11 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import hashers
+try:
+    from django.contrib.auth import hashers
+except ImportError:
+    # django 1.3
+    hashers = None
 from .. import models
 from ..auth_backend import TwoStepAuthBackend
 from .base import TwoStepAuthProfileTestCaseBase, otp_data, hotp_data, get_fake_time_fn
@@ -24,15 +28,17 @@ class TwoStepAuthBackendTestCase(TwoStepAuthProfileTestCaseBase):
             settings.PASSWORD_HASHERS = (
                     'django.contrib.auth.hashers.SHA1PasswordHasher',
                 )
-        self.old_PREFERRED_HASHER = hashers.PREFERRED_HASHER
-        hashers.PREFERRED_HASHER = None # make sure it uses the SHA1PasswordHasher
+        if hashers:
+            self.old_PREFERRED_HASHER = hashers.PREFERRED_HASHER
+            hashers.PREFERRED_HASHER = None # make sure it uses the SHA1PasswordHasher
         self.old_now = models.now
         models.now = get_fake_time_fn()
         self.backend = TwoStepAuthBackend()
 
     def tearDown(self):
         models.now = self.old_now
-        hashers.PREFERRED_HASHER = self.old_PREFERRED_HASHER
+        if hashers:
+            hashers.PREFERRED_HASHER = self.old_PREFERRED_HASHER
         if hasattr(self, 'original_password_hashers_setting'):
             settings.PASSWORD_HASHERS = self.original_password_hashers_setting
         super(TwoStepAuthBackendTestCase, self).tearDown()
@@ -74,7 +80,6 @@ class TwoStepAuthBackendTestCase(TwoStepAuthProfileTestCaseBase):
     def test_first_step(self):
         """Test first_step(): user with correct (username, password) and two-step auth enabled returns a token."""
         user = User.objects.get(username='test_otp')
-        import pudb; pudb.set_trace()
         token = self.backend.first_step(username='test_otp', password='test_otp')
         expected = default_token_generator.make_token(user)
         self.assertEqual(token, expected)

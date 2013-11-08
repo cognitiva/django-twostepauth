@@ -1,4 +1,4 @@
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
@@ -24,7 +24,7 @@ urlpatterns = patterns('',
             {'form_class': get_profile_form() }, name='profiles_edit_profile'),
     (r'^profiles/', include('profiles.urls')),
     #demo application
-    url(r'^', direct_to_template, {'template':'index.html'}, name='home'),
+    url(r'^', TemplateView.as_view(template_name="index.html"), name='home'),
 )
 
 if settings.DEBUG:

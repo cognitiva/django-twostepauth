@@ -10,12 +10,11 @@ from django.contrib.sites.models import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import redirect, get_object_or_404
 from django.template import RequestContext
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic.simple import direct_to_template
 
 from .forms import TwoStepAuthEditForm, TokenAuthenticationForm, TwoStepAuthenticationForm
 from .utils import build_chart_url, RememberComputerTokenGenerator
@@ -81,8 +80,7 @@ def twostepauth_profile(request, edit_form=TwoStepAuthEditForm,
         ctx['chart_url'] = build_chart_url(profile.tsa_secret, user.username, site.domain)
     else:
         ctx['chart_url'] = None
-    return render_to_response(template_name, ctx,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, ctx)
 
 
 @never_cache
@@ -176,8 +174,7 @@ def login_step_one(request, authentication_form=TwoStepAuthenticationForm,
                           redirect_field_name: redirect_to,
                           'site': current_site,
                           'site_name': current_site.name})
-    return direct_to_template(request, template_name,
-                              extra_context=extra_context)
+    return render(request, template_name, extra_context)
 
 
 @never_cache
@@ -252,5 +249,4 @@ def login_step_two(request, token_form=TokenAuthenticationForm,
         form = token_form(initial=initial_data)
 
     extra_context.update({'form': form})
-    return direct_to_template(request, template_name,
-                              extra_context=extra_context)
+    return render(request, template_name, extra_context)
